@@ -1,2 +1,2 @@
 # React_Practice_Projects
-This contaains multiple mini projects built using React.
+This contains multiple mini projects built using React.
