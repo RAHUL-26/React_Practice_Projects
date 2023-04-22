@@ -10,25 +10,20 @@ function App(){
 
   const [notes,setNote]=React.useState([]);
 
-  function addNote(title,content){
+  function addNote(note){
 
-    const newNote={
-      title:title,
-      content:content
-    }
-
-    if(title===""){
+    if(note.title===""){
       alert("No Title Added");
-      return newNote;
+      return note;
     }
-    else if(content==="")
+    else if(note.content==="")
     {
       alert("No Content Added");
-      return newNote;
+      return note;
     }
     else{
     setNote(prevValue=>{
-      return [...prevValue,newNote];
+      return [...prevValue,note];
     });
     return null;
   }
@@ -56,6 +51,15 @@ function App(){
             <Header/>
             <CreateArea addNote={addNote}/>
             {notes.map(createNote)}
+            {/* {notes.map((note,index)=>{
+                return (<Note 
+                  key={index}
+                  id={index}
+                  title={note.title}
+                  content={note.content}
+                  deleteNote={deleteNote}
+                />);
+            })} */}
             <Footer/>
         </div>
     );

@@ -1,38 +1,44 @@
 import React from "react";
 
 function CreateArea(props) {
-    const[title,setTitle]=React.useState("");
-    const[content,setContent]=React.useState("");
-
+    const[note,setNote]=React.useState({
+        title:"",
+        content:""
+    });
      function handleChange(event){
         const{name,value}=event.target;
-        if(name==="title"){
-            setTitle(value);
+       setNote(prevVal=>{
+        return {
+            ...prevVal,
+            [name]:value
         }
-        else if(name==="content"){
-            setContent(value);
-        }
+       });
      }
 
-     function preventDef(event){
+     function submitNote(event){
+        const newNote=props.addNote(note);
+        if(newNote!==null){
+            setNote({
+                title:newNote.title,
+                content:newNote.content
+            })
+        }
+        else{
+        setNote(
+            {
+                title:"",
+                content:""
+            }
+        )
+        }
         event.preventDefault();
      }
   return (
     <div>
-      <form onSubmit={preventDef}>
-        <input onChange={handleChange} name="title" placeholder="Title" value={title} />
-        <textarea onChange={handleChange} name="content" placeholder="Take a note..." rows="3" value={content} />
-        <button type="submit" onClick={()=>{
-            const newNote=props.addNote(title,content);
-            if(newNote!==null){
-                setTitle(newNote.title);
-                setContent(newNote.content);
-            }
-            else{
-            setTitle("");
-            setContent("");
-            }
-        }}>Add</button>
+      <form>
+        <input onChange={handleChange} name="title" placeholder="Title" value={note.title} />
+        <textarea onChange={handleChange} name="content" placeholder="Take a note..." rows="3" value={note.content} />
+        <button type="submit" onClick={submitNote}>Add</button>
       </form>
     </div>
   );
